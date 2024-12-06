@@ -2,6 +2,14 @@ import tkinter as tk
 
 
 class Game(tk.Tk):
+  def set_up_playground(self):
+    self.clear_content()
+
+  def clear_content(self):
+    # Goes through every component of content frame to clear it
+    for widget in self.winfo_children():
+      widget.destroy()
+
 
   def __init__(self):
     super().__init__()
@@ -13,8 +21,11 @@ class Game(tk.Tk):
     self.title_screen_img = self.title_screen_img.subsample(2,2)
     tk.Label(self, image=self.title_screen_img).grid(row=0, column=0)
 
-    self.play_button = tk.Button(self, text="Play", font='Arial, 20', borderwidth= 0  , width= 8, height=2)
+    self.play_button = tk.Button(self, text="Play", font='Arial, 20', borderwidth= 0  , width= 8, height=2, command=self.set_up_playground)
     self.play_button.place(x=350, y=300)
+
+
+    
 
 
 def main():

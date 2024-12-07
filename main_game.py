@@ -45,12 +45,41 @@ class Game(tk.Tk):
       self.board[row][col] = self.current_player
       self.buttons[row][col].config(text=self.current_player, state="disabled")
 
-    if self.current_player == "X":
-      self.current_player = "O" 
-      
-    else: 
-      self.current_player = "X"
+    if self.check_winner():
+      messagebox.showinfo("Game Over", f"Player {self.current_player} wins!")
+      self.reset_board()
 
+    elif all(all(cell != "" for cell in row) for row in self.board):
+      messagebox.showinfo("Game Over", "It's a draw!")
+      self.reset_board()
+
+    else:
+      self.current_player = "O" if self.current_player == "X" else "X"
+
+
+  def check_winner(self):
+    # Check rows and columns
+    for i in range(3):
+      if (self.board[i][0] == self.board[i][1] == self.board[i][2] != ""
+          or self.board[0][i] == self.board[1][i] == self.board[2][i] != ""
+      ):
+          return True
+    # Check diagonals
+    if (self.board[0][0] == self.board[1][1] == self.board[2][2] != ""
+        or self.board[0][2] == self.board[1][1] == self.board[2][0] != ""):
+        return True
+    
+    return False
+  def reset_board(self):
+    self.board = [["" for _ in range(3)] for _ in range(3)]
+    self.current_player = "X"
+    for row in range(3):
+      for col in range(3):
+        self.buttons[row][col].config(text="", state="normal")
+
+  def clear_content(self):
+    for widget in self.winfo_children():
+      widget.destroy()
 
   def clear_content(self):
     for widget in self.winfo_children():
@@ -62,3 +91,6 @@ def main():
 
 if __name__ == "__main__":
   main()
+
+
+

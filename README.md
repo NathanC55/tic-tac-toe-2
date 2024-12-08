@@ -45,3 +45,19 @@ Follow these steps to get started with Tic-Tac-Toe-2:
 - Player `X` and `O` take turns placing their marks on the grid.
 - After 3 moves per player, the oldest move disappears to keep the game dynamic.
 - Players can return to the title screen with a confirmation prompt to restart the game.
+
+---
+
+### To-Do (In Development)
+
+- Enhance game mechanics.
+- Implement a single-player mode with AI.
+- Improve styling and customization options.
+- Add timer
+- Add unique cursor
+
+---
+
+### Contribution
+
+Feel free to contribute by submitting issues or pull requests. All contributions are welcome!

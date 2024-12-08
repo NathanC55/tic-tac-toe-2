@@ -10,6 +10,10 @@ class Game(tk.Tk):
     self.current_player = "X"
     self.board = [["" for _ in range(3)] for _ in range(3)]
     self.buttons = [[None for _ in range(3)] for _ in range(3)]
+
+    self.x_moves = []
+    self.o_moves = []
+
     
     self.set_up_title_screen()
 
@@ -42,15 +46,46 @@ class Game(tk.Tk):
 
   def make_move(self, row, col):
     if self.board[row][col] == "":
-      self.board[row][col] = self.current_player
-      self.buttons[row][col].config(text=self.current_player, state="disabled")
+    # Handle moves for player 'X'
+      if self.current_player == 'X':
+        if len(self.x_moves) == 3:
+          # Get the first move from the list
+          old_move = self.x_moves[0]
+
+          # Clear the corresponding button and board position
+          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal")
+          self.board[old_move[0]][old_move[1]] = ""
+
+          # Remove the first move from the list
+          self.x_moves.pop(0)
+
+      # Add the new move to the list
+        self.x_moves.append((row, col))
+
+        # Handle moves for player 'O'
+      elif self.current_player == 'O':
+        if len(self.o_moves) == 3:
+          # Get the first move from the list
+          old_move = self.o_moves[0]
+
+          # Clear the corresponding button and board position
+          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal")
+          self.board[old_move[0]][old_move[1]] = ""
+
+          # Remove the first move from the list
+          self.o_moves.pop(0)
+
+        # Add the new move to the list
+        self.o_moves.append((row, col))
+
+
+
+    self.board[row][col] = self.current_player
+    self.buttons[row][col].config(text=self.current_player, state="disabled")
+
 
     if self.check_winner():
       messagebox.showinfo("Game Over", f"Player {self.current_player} wins!")
-      self.reset_board()
-
-    elif all(all(cell != "" for cell in row) for row in self.board):
-      messagebox.showinfo("Game Over", "It's a draw!")
       self.reset_board()
 
     else:
@@ -70,6 +105,8 @@ class Game(tk.Tk):
         return True
     
     return False
+  
+
   def reset_board(self):
     self.board = [["" for _ in range(3)] for _ in range(3)]
     self.current_player = "X"
@@ -81,16 +118,9 @@ class Game(tk.Tk):
     for widget in self.winfo_children():
       widget.destroy()
 
-  def clear_content(self):
-    for widget in self.winfo_children():
-      widget.destroy()
-
     
 def main():
   Game().mainloop()
 
 if __name__ == "__main__":
   main()
-
-
-

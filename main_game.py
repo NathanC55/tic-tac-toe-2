@@ -128,9 +128,12 @@ class Tik_tac_toe(tk.Tk):
   def reset_board(self):
     self.board = [["" for _ in range(3)] for _ in range(3)]
     self.current_player = "X"
+    self.x_moves = []
+    self.o_moves = []
     for row in range(3):
       for col in range(3):
-        self.buttons[row][col].config(text="", state="normal")
+        self.buttons[row][col].config(text="", state="normal", command=lambda r=row, c=col: self.make_move(r, c))
+
 
   def clear_content(self):
     for widget in self.winfo_children():

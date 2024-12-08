@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-class Game(tk.Tk):
+class Tik_tac_toe(tk.Tk):
   def __init__(self):
     super().__init__()
     self.title("Tic-Tac-Toe 2")
@@ -29,12 +29,19 @@ class Game(tk.Tk):
 
   def set_up_playground(self):
     self.clear_content()
-    self.back_button = tk.Button(self, text="<", font='Arial, 25', command= self.set_up_title_screen)
+    self.back_button = tk.Button(self, text="<", font='Arial, 25', command= self.confirm_back)
     self.back_button.grid(row = 0, column = 0)
 
     self.game_content = tk.Frame(self)
-    self.game_content.grid(row=1, column=2, sticky="NSEW")
+    self.game_content.grid(row=1, column=2, sticky="NSEW", padx=200, pady=50)
     self.create_board()
+    self.reset_board()
+  
+  def confirm_back(self):
+    # Show confirmation dialog
+    answer = messagebox.askyesno("Confirm", "Are you sure you want to leave?")
+    if answer:  # If user clicks "Yes"
+        self.set_up_title_screen()
 
   def create_board(self):
     for row in range(3):
@@ -42,7 +49,6 @@ class Game(tk.Tk):
         button = tk.Button(self.game_content,text="",font=("Arial", 24),width=5,height=2, command=lambda r=row, c=col: self.make_move(r, c))
         button.grid(row=row, column=col)
         self.buttons[row][col] = button
-
 
   def make_move(self, row, col):
     if self.board[row][col] == "":
@@ -132,7 +138,7 @@ class Game(tk.Tk):
 
     
 def main():
-  Game().mainloop()
+  Tik_tac_toe().mainloop()
 
 if __name__ == "__main__":
   main()

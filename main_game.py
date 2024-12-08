@@ -46,30 +46,38 @@ class Game(tk.Tk):
 
   def make_move(self, row, col):
     if self.board[row][col] == "":
-    # Handle moves for player 'X'
+
       if self.current_player == 'X':
         if len(self.x_moves) == 3:
           # Get the first move from the list
           old_move = self.x_moves[0]
-
+          
           # Clear the corresponding button and board position
-          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal")
+          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal",command=lambda r=old_move[0], c=old_move[1]: self.make_move(r, c))
           self.board[old_move[0]][old_move[1]] = ""
+          
 
           # Remove the first move from the list
           self.x_moves.pop(0)
-
-      # Add the new move to the list
+          
+          # Add the new move to the list
         self.x_moves.append((row, col))
+          
+        # Shows the next move to disappear
+        if len(self.x_moves) == 3:
+          next_move_to_disappear = self.x_moves[0]
+          self.buttons[next_move_to_disappear[0]][next_move_to_disappear[1]].config(fg = 'yellow')
 
-        # Handle moves for player 'O'
+
+
+
       elif self.current_player == 'O':
         if len(self.o_moves) == 3:
           # Get the first move from the list
           old_move = self.o_moves[0]
 
           # Clear the corresponding button and board position
-          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal")
+          self.buttons[old_move[0]][old_move[1]].config(text="", state="normal", command=lambda r=old_move[0], c=old_move[1]: self.make_move(r, c))
           self.board[old_move[0]][old_move[1]] = ""
 
           # Remove the first move from the list
@@ -78,11 +86,15 @@ class Game(tk.Tk):
         # Add the new move to the list
         self.o_moves.append((row, col))
 
+        # Shows the next move to disappear
+        if len(self.o_moves) == 3:
+          next_move_to_disappear = self.o_moves[0]
+          self.buttons[next_move_to_disappear[0]][next_move_to_disappear[1]].config(fg = 'yellow')
+
 
 
     self.board[row][col] = self.current_player
-    self.buttons[row][col].config(text=self.current_player, state="disabled")
-
+    self.buttons[row][col].config(text=self.current_player, fg="blue" if self.current_player == 'X' else "red", command = lambda : None)
 
     if self.check_winner():
       messagebox.showinfo("Game Over", f"Player {self.current_player} wins!")

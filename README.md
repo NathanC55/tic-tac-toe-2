@@ -25,7 +25,7 @@ Follow these steps to get started with Tic-Tac-Toe-2:
 
    - Clone this repository to your local device:
      ```bash
-     git clone https://github.com/your-repo/tic-tac-toe-2.git
+     git clone https://github.com/NathanC55/tic-tac-toe-2.git
      ```
 
 3. **Run the Project**:

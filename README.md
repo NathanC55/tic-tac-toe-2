@@ -2,7 +2,7 @@
 
 ### Description
 
-Tic-Tac-Toe-2 is a class project that is a fresh take on the classic game of Tic-Tac-Toe. Players can experience the traditional rules with added twists for more dynamic play.
+Tic-Tac-Toe-2 is a class project that is a fresh take on the classic game of Tic-Tac-Toe. Players can experience the traditional rules with added twists for more dynamic play. You can not draw. Only 3 Xs or Os on the board.
 
 ---
 

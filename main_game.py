@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+
 class Tik_tac_toe(tk.Tk):
   def __init__(self):
     super().__init__()
@@ -17,6 +18,7 @@ class Tik_tac_toe(tk.Tk):
     
     self.set_up_title_screen()
 
+  # Set up title screen 
   def set_up_title_screen(self):
     self.clear_content()
     self.title_screen_img = tk.PhotoImage(file='tic-tac-toe-2/assets/title_screen.png')
@@ -26,30 +28,38 @@ class Tik_tac_toe(tk.Tk):
     self.play_button = tk.Button(self, text="Play", font='Arial, 20', borderwidth= 0  , width= 8, height=2, command=self.set_up_playground)
     self.play_button.place(x=350, y=300)
 
-
+  #Set up game board
   def set_up_playground(self):
     self.clear_content()
     self.back_button = tk.Button(self, text="<", font='Arial, 25', command= self.confirm_back)
     self.back_button.grid(row = 0, column = 0)
+
+    tk.Label(self, text="Exit").grid(row=0, column=1)
+  
+    self.tic_tac_toe_img = tk.PhotoImage(file='tic-tac-toe-2/assets/x_vs_o.png')
+    self.tic_tac_toe_img = self.tic_tac_toe_img.subsample(4,4)
+    tk.Label(self, image=self.tic_tac_toe_img).grid(row=0, column=2)
+
 
     self.game_content = tk.Frame(self)
     self.game_content.grid(row=1, column=2, sticky="NSEW", padx=200, pady=50)
     self.create_board()
     self.reset_board()
   
+  # Confirm to go back to title screen
   def confirm_back(self):
     # Show confirmation dialog
     answer = messagebox.askyesno("Confirm", "Are you sure you want to leave?")
     if answer:  # If user clicks "Yes"
         self.set_up_title_screen()
-
+  #Create Board
   def create_board(self):
     for row in range(3):
       for col in range(3):
         button = tk.Button(self.game_content,text="",font=("Arial", 24),width=5,height=2, command=lambda r=row, c=col: self.make_move(r, c))
         button.grid(row=row, column=col)
         self.buttons[row][col] = button
-
+  #Make a move on board
   def make_move(self, row, col):
     if self.board[row][col] == "":
 
@@ -109,7 +119,7 @@ class Tik_tac_toe(tk.Tk):
     else:
       self.current_player = "O" if self.current_player == "X" else "X"
 
-
+  #Check winner
   def check_winner(self):
     # Check rows and columns
     for i in range(3):
@@ -124,7 +134,7 @@ class Tik_tac_toe(tk.Tk):
     
     return False
   
-
+  #Reset Board
   def reset_board(self):
     self.board = [["" for _ in range(3)] for _ in range(3)]
     self.current_player = "X"
@@ -134,7 +144,7 @@ class Tik_tac_toe(tk.Tk):
       for col in range(3):
         self.buttons[row][col].config(text="", state="normal", command=lambda r=row, c=col: self.make_move(r, c))
 
-
+  #Clear Content
   def clear_content(self):
     for widget in self.winfo_children():
       widget.destroy()
